@@ -1,10 +1,12 @@
 class WeceemSpringSecurityGrailsPlugin {
     // the plugin version
-    def version = "1.0-RC1"
+    def version = "1.0-RC2"
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "1.3.1 > *"
     // the other plugins this plugin depends on
     def dependsOn = [springSecurityCore:'1.0.1 > *']
+    
+    def loadAfter = ['springSecurityCore'] // So that our user details service overrides
     
     // resources that are excluded from plugin packaging
     def pluginExcludes = [
@@ -28,7 +30,9 @@ Your application still needs to configure Spring-Security however. The domain cl
     }
 
     def doWithSpring = {
-        // TODO Implement runtime spring config (optional)        
+        userDetailsService(org.weceem.auth.WeceemUserDetailsService) {
+            grailsApplication = ref('grailsApplication')
+        }
     }
 
     def doWithDynamicMethods = { ctx ->
@@ -54,7 +58,7 @@ Your application still needs to configure Spring-Security however. The domain cl
                 if (log.debugEnabled) {
                     log.debug "Weceem security getUserEmail callback - user principal is: ${princ} (an instance of ${princ?.class})"
                 }
-                return (princ instanceof String) ? null : princ.domainClass?.email   
+                return (princ instanceof String) ? null : princ?.email   
             },
             getUserRoles : { -> 
                 def princ = authenticateService.principal
@@ -65,7 +69,7 @@ Your application still needs to configure Spring-Security however. The domain cl
                     return ['ROLE_GUEST']
                 }
                 def auths = []
-                auths.addAll(princ.authorities)
+                auths.addAll(princ.authorities.authority)
                 return auths ?: ['ROLE_GUEST']
             },
             getUserPrincipal : { -> 
