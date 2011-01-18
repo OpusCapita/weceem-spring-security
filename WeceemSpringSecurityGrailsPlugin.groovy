@@ -1,6 +1,6 @@
 class WeceemSpringSecurityGrailsPlugin {
     // the plugin version
-    def version = "1.0-RC2"
+    def version = "1.0-RC3"
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "1.3.1 > *"
     // the other plugins this plugin depends on
@@ -50,7 +50,7 @@ Your application still needs to configure Spring-Security however. The domain cl
                 if (princ instanceof String) {
                     return null
                 } else {
-                    return princ.username   
+                    return princ?.username   
                 }
             },
             getUserEmail : { ->
@@ -69,7 +69,10 @@ Your application still needs to configure Spring-Security however. The domain cl
                     return ['ROLE_GUEST']
                 }
                 def auths = []
-                auths.addAll(princ.authorities.authority)
+                def authorities = princ?.authorities
+                if (authorities) {
+                    auths.addAll(authorities?.authority)
+                }
                 return auths ?: ['ROLE_GUEST']
             },
             getUserPrincipal : { -> 
