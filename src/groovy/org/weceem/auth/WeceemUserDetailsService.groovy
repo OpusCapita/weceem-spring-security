@@ -50,7 +50,6 @@ class WeceemUserDetailsService implements GrailsUserDetailsService, Initializing
 
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        println "Getting WUDS user for $username"
         domainClass.withTransaction { status ->
 
             def user = domainClass.findByUsername(username)
