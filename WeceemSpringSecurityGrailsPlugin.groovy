@@ -1,10 +1,10 @@
 class WeceemSpringSecurityGrailsPlugin {
     // the plugin version
-    def version = "1.1"
+    def version = "1.2-SNAPSHOT"
     // the version or versions of Grails the plugin is designed for
-    def grailsVersion = "1.3.1 > *"
+    def grailsVersion = "2.1 > *"
     // the other plugins this plugin depends on
-    def dependsOn = [springSecurityCore:'1.0.1 > *']
+    def dependsOn = [springSecurityCore:'1.2.7.3 > *']
     
     def loadAfter = ['springSecurityCore'] // So that our user details service overrides
     
