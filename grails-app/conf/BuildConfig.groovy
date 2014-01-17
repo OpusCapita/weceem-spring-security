@@ -5,12 +5,12 @@ grails.project.dependency.resolver = "maven" // or ivy
 grails.project.dependency.resolution = {
     inherits "global" // inherit Grails default dependencies
 
-	log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
+    log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
 
-	repositories {        
-		grailsPlugins()
-		grailsHome()
-		grailsCentral()
+    repositories {
+        grailsPlugins()
+        grailsHome()
+        grailsCentral()
         mavenCentral()
     }
 
@@ -24,7 +24,7 @@ grails.project.dependency.resolution = {
         // plugins needed at runtime but not for compilation
         runtime ":hibernate:3.6.10.4" // or ":hibernate4:4.1.11.2"
         compile ":spring-security-core:1.2.7.3"
-
- 	}
+        build ":release:3.0.1"
+    }
 }
 

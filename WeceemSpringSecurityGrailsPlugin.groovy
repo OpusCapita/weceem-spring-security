@@ -1,33 +1,39 @@
 class WeceemSpringSecurityGrailsPlugin {
     // the plugin version
-    def version = "1.2-SNAPSHOT"
+    def version = "1.2-M1"
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "2.1 > *"
     // the other plugins this plugin depends on
     def dependsOn = [springSecurityCore:'1.2.7.3 > *']
-    
+
     def loadAfter = ['springSecurityCore'] // So that our user details service overrides
-    
+
     // resources that are excluded from plugin packaging
     def pluginExcludes = [
             "grails-app/views/error.gsp",
             "grails-app/domain/**/*.groovy"
     ]
 
-    def author = "Marc Palmer"
+    def author = "jCatalog AG"
     def authorEmail = "info@weceem.org"
     def title = "Bridges Weceem authentication to Spring Security"
     def description = '''\\
 Provides the glue needed to make Weceem plugin use Spring Security for authorisation and authentication.
-
 Your application still needs to configure Spring-Security however. The domain class is expected to include "email" property.
 '''
 
     // URL to the plugin's documentation
     def documentation = "http://grails.org/plugin/weceem-spring-security"
+    def license = "APACHE"
+    def organization = [ name: "jCatalog AG", url: "http://weceem.org/" ]
+    def developers = [
+            [ name: "Marc Palmer", email: "marc@grailsrocks.com" ]
+    ]
+    def issueManagement = [ system: "JIRA", url: "http://jira.jcatalog.com/browse/WCM" ]
+    def scm = [ url: "https://github.com/jCatalog/weceem-plugin" ]
 
     def doWithWebDescriptor = { xml ->
-        // TODO Implement additions to web.xml (optional), this event occurs before 
+        // TODO Implement additions to web.xml (optional), this event occurs before
     }
 
     def doWithSpring = {
@@ -51,7 +57,7 @@ Your application still needs to configure Spring-Security however. The domain cl
                 if (princ instanceof String) {
                     return null
                 } else {
-                    return princ?.username   
+                    return princ?.username
                 }
             },
             getUserEmail : { ->
@@ -59,9 +65,9 @@ Your application still needs to configure Spring-Security however. The domain cl
                 if (log.debugEnabled) {
                     log.debug "Weceem security getUserEmail callback - user principal is: ${princ} (an instance of ${princ?.class})"
                 }
-                return (princ instanceof String) ? null : princ?.email   
+                return (princ instanceof String) ? null : princ?.email
             },
-            getUserRoles : { -> 
+            getUserRoles : { ->
                 def princ = authenticateService.principal
                 if (log.debugEnabled) {
                     log.debug "Weceem security getUserRoles callback - user principal is: ${princ} (an instance of ${princ?.class})"
@@ -76,10 +82,10 @@ Your application still needs to configure Spring-Security however. The domain cl
                 }
                 return auths ?: ['ROLE_GUEST']
             },
-            getUserPrincipal : { -> 
-                authenticateService.principal 
+            getUserPrincipal : { ->
+                authenticateService.principal
             }
-        ]    
+        ]
     }
 
     def onChange = { event ->
