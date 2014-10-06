@@ -1,7 +1,7 @@
 // configuration for plugin testing - will not be included in the plugin zip
 
 // Just for testing 
-grails.plugins.springsecurity.userLookup.userDomainClassName="TestUser"
+grails.plugin.springsecurity.userLookup.userDomainClassName="TestUser"
 
 log4j = {
     // Example of changing the log pattern for the default console

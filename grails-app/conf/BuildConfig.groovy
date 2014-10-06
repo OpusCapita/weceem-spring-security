@@ -20,10 +20,10 @@ grails.project.dependency.resolution = {
 
     plugins {
         // plugins for the build system only
-        build ":tomcat:7.0.50"
+        build ':tomcat:7.0.54'
         // plugins needed at runtime but not for compilation
-        runtime ":hibernate:3.6.10.7" // or ":hibernate4:4.1.11.2"
-        compile ":spring-security-core:1.2.7.3"
+        runtime ':hibernate4:4.3.5.5'
+        compile ":spring-security-core:2.0-RC4"
         build ":release:3.0.1"
     }
 }

@@ -1,25 +1,19 @@
 package org.weceem.auth
 
 import org.springframework.security.core.GrantedAuthority
-import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.userdetails.User
+import grails.plugin.springsecurity.userdetails.GrailsUser
 
-class WeceemUserDetails implements UserDetails {
-    final Collection<GrantedAuthority> authorities
-    final String password
-    final String username
-    final boolean enabled
+class WeceemUserDetails extends GrailsUser {
 
-    final boolean accountNonExpired = true
-    final boolean accountNonLocked = true
-    final boolean credentialsNonExpired = true
-    
     final def extraProperties
     
-    WeceemUserDetails(username, password, enabled, authorities, otherProps) {
-        this.username = username
-        this.password = password
-        this.authorities = authorities
-        this.enabled = enabled
+    WeceemUserDetails(String username, String password, boolean enabled,
+                      boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked,
+                      Collection<GrantedAuthority> authorities,
+                      long id, HashMap otherProps) {
+        super(username, password, enabled, accountNonExpired,
+              credentialsNonExpired, accountNonLocked, authorities, id)
         this.extraProperties = otherProps
     }
     

@@ -1,14 +1,13 @@
 package org.weceem.auth
 
-import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
-import org.codehaus.groovy.grails.plugins.springsecurity.GrailsUserDetailsService
-
 import org.springframework.security.core.authority.GrantedAuthorityImpl
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.beans.factory.InitializingBean
 
 import org.apache.commons.logging.LogFactory
+import grails.plugin.springsecurity.SpringSecurityUtils
+import grails.plugin.springsecurity.userdetails.GrailsUserDetailsService
 
 class WeceemUserDetailsService implements GrailsUserDetailsService, InitializingBean {
 
@@ -31,7 +30,7 @@ class WeceemUserDetailsService implements GrailsUserDetailsService, Initializing
 
     void afterPropertiesSet() {
         def conf = grailsApplication.config
-        def clsname = conf.grails.plugins.springsecurity.userLookup.userDomainClassName
+        def clsname = conf.grails.plugin.springsecurity.userLookup.userDomainClassName
         domainClass = grailsApplication.getDomainClass(clsname).clazz
         
         def mapper = conf.weceem.springsecurity.details.mapper
@@ -70,7 +69,8 @@ class WeceemUserDetailsService implements GrailsUserDetailsService, Initializing
             if (log.debugEnabled) {
                 log.debug "Returning user details objecting with values: ${requiredDetails.dump()}"
             }
-            return new WeceemUserDetails(details.username, details.password, details.enabled, authorities ?: NO_ROLES, details)
+            return new WeceemUserDetails(details.username, details.password, details.enabled,
+                    true, true, true, authorities ?: NO_ROLES, user.id, details)
         }
     }
 }
