@@ -70,7 +70,8 @@ class WeceemUserDetailsService implements GrailsUserDetailsService, Initializing
                 log.debug "Returning user details objecting with values: ${requiredDetails.dump()}"
             }
             return new WeceemUserDetails(details.username, details.password, details.enabled,
-                    true, true, true, authorities ?: NO_ROLES, user.id, details)
+                    details.accountNonExpired, details.credentialsNonExpired, details.accountNonLocked,
+                    authorities ?: NO_ROLES, user.id, details)
         }
     }
 }
