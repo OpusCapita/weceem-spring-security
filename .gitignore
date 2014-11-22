@@ -1,0 +1,16 @@
+#IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+#Eclipse
+.settings/
+.classpath
+.project
+
+#compiled sources
+target/*
+target-eclipse/*
+out/*
+*.zip
